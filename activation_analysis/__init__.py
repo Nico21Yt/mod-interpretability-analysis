@@ -1,6 +1,6 @@
 """
-激活分析模块
-用于分析关键组件的激活数据并生成API解释所需的prompts
+Activation Analysis Module
+Used for analyzing activation data of key components and generating prompts needed for API interpretation
 """
 
 from .activation_preparer import ActivationPreparer

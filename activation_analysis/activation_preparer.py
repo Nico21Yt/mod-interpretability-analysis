@@ -200,48 +200,48 @@ class ActivationPreparer:
         """Create GPT-ready format prompts"""
         os.makedirs(output_dir, exist_ok=True)
         
-        system_prompt = """你是一个专门用于大语言模型可解释性的AI助手。
+        system_prompt = """You are an AI assistant specialized in large language model interpretability.
 
-项目背景和目标:
-这个项目的核心研究目标是调查大语言模型在思维链(CoT)推理过程中的"不真诚"现象。
-具体来说，这指的是模型生成看似逻辑的推理步骤，但其内部关键组件可能并未真正执行这些步骤。
-相反，它们可能使用了"捷径"或启发式方法来直接得出答案，然后生成一个听起来合理的合理化解释。
-你将分析的组件已经通过因果分析技术（如"电路追踪"）预先识别为对模型输出具有因果重要性。
+Project Background and Goals:
+The core research objective of this project is to investigate the "insincere" phenomenon in large language models during chain-of-thought (CoT) reasoning processes.
+Specifically, this refers to models generating seemingly logical reasoning steps, but their internal key components may not actually execute these steps.
+Instead, they may use "shortcuts" or heuristic methods to directly arrive at answers, then generate a seemingly reasonable rationalization.
+The components you will analyze have been pre-identified through causal analysis techniques (such as "circuit tracing") as having causal importance for model outputs.
 
-你的核心任务:
-你的主要功能是分析来自单个预识别组件（注意力头或MLP层）的激活数据，并在上述研究背景下推断和描述其特定功能，
-特别关注任何"不真诚"或类似捷径的行为迹象。
+Your Core Task:
+Your main function is to analyze activation data from individual pre-identified components (attention heads or MLP layers) and infer and describe their specific functions within the above research context,
+with particular attention to any "insincere" or shortcut-like behavioral signs.
 
-指导原则:
-你的分析必须客观，仅基于提供的数据。
+Guidelines:
+Your analysis must be objective and based solely on the provided data.
 
-在你的分析中，密切关注可能揭示"捷径"行为的模式。例如：
-- 组件是否真正参与逐步计算，还是只关注与最终答案相关的token？
-- 它是否忽略中间数值？
-- 它是否对某些非计算关键词（如"逐步"）过度敏感？
+In your analysis, pay close attention to patterns that may reveal "shortcut" behaviors. For example:
+- Does the component truly participate in step-by-step calculations, or does it only focus on tokens related to the final answer?
+- Does it ignore intermediate numerical values?
+- Is it overly sensitive to certain non-computational keywords (such as "step by step")?
 
-输出格式要求:
-你的回复必须是一个单一的、有效的JSON对象，严格遵循指定的输出模式。不要包含任何介绍性文本、
-markdown格式（如```json）、摘要或JSON对象之外的解释。"""
+Output Format Requirements:
+Your response must be a single, valid JSON object that strictly follows the specified output schema. Do not include any introductory text,
+markdown formatting (such as ```json), summaries, or explanations outside the JSON object."""
         
         with open(os.path.join(output_dir, "system_prompt.txt"), 'w', encoding='utf-8') as f:
             f.write(system_prompt)
 
         for component_id, component_data in data["component_data"].items():
-            # 准备数据块
+            # Prepare data block
             match = re.search(r'([am])(\d+)', component_id)
-            component_type = "注意力头" if match.group(1) == 'a' else "MLP"
+            component_type = "attention head" if match.group(1) == 'a' else "MLP"
             layer_index = int(match.group(2))
 
-            # 创建用户prompt
-            user_prompt = f"""分析以下模型组件的功能，基于提供的激活数据。
+            # Create user prompt
+            user_prompt = f"""Analyze the function of the following model component based on the provided activation data.
 
-### 组件元数据 ###
-组件ID: {component_id}
-组件类型: {component_type}
-层索引: {layer_index}
+### Component Metadata ###
+Component ID: {component_id}
+Component Type: {component_type}
+Layer Index: {layer_index}
 
-### 激活数据 (每个样本的前{self.config["activation_analysis"]["top_tokens_display"]}个token) ###
+### Activation Data (top {self.config["activation_analysis"]["top_tokens_display"]} tokens per sample) ###
 """
             
             samples_for_prompt = []
@@ -260,23 +260,23 @@ markdown格式（如```json）、摘要或JSON对象之外的解释。"""
             output_schema_str = json.dumps({
                 "componentId": component_id,
                 "analysis": {
-                    "inferredFunction": "一个简洁的句子，总结组件的主要功能。",
-                    "keyPatterns": ["基于数据观察到的具体、有证据的模式列表。"],
-                    "detailedRole": "详细段落，解释此组件如何有助于解决任务。",
-                    "confidence": "High、Medium或Low之一。",
-                    "confidenceReasoning": "对你的置信度水平的简要说明。"
+                    "inferredFunction": "A concise sentence summarizing the component's main function.",
+                    "keyPatterns": ["List of specific, evidence-based patterns observed in the data."],
+                    "detailedRole": "Detailed paragraph explaining how this component contributes to solving the task.",
+                    "confidence": "One of High, Medium, or Low.",
+                    "confidenceReasoning": "Brief explanation of your confidence level."
                 }, 
                 "metadata": {"componentType": component_type, "layerIndex": layer_index}
             }, indent=2, ensure_ascii=False)
 
             user_prompt += f"""
 
-### 分析说明和输出模式 ###
-基于上述数据，执行以下分析并生成严格遵循此模式的JSON输出。
+### Analysis Instructions and Output Schema ###
+Based on the above data, perform the following analysis and generate JSON output that strictly follows this schema.
 
-1. **解释激活模式**: 查看token数据中的重复激活模式。
-2. **推断功能角色**: 将激活模式综合为连贯的功能描述。
-3. **生成JSON输出**: 用你的分析填充以下JSON模式。
+1. **Explain activation patterns**: Look for recurring activation patterns in the token data.
+2. **Infer functional role**: Synthesize activation patterns into a coherent functional description.
+3. **Generate JSON output**: Fill the following JSON schema with your analysis.
 
 {output_schema_str}
 """
@@ -285,4 +285,4 @@ markdown格式（如```json）、摘要或JSON对象之外的解释。"""
                 f.write(user_prompt)
         
         if self.config["output_config"]["verbose"]:
-            print(f"API prompts保存到: {output_dir}/")
+            print(f"API prompts saved to: {output_dir}/")

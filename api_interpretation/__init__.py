@@ -1,6 +1,6 @@
 """
-API解释模块
-用于调用API自动解释模型组件的功能
+API Interpretation Module
+Used for calling APIs to automatically interpret the functions of model components
 """
 
 from .api_client import APIClient
