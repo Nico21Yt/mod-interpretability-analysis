@@ -1,24 +1,13 @@
-# 核心依赖
 torch>=2.0.0
 transformers>=4.30.0
 numpy>=1.21.0
 tqdm>=4.64.0
-
-# 配置管理
 PyYAML>=6.0
-
-# API相关
 openai>=1.0.0
-
-# 图可视化
 networkx>=3.0
 pygraphviz>=1.10
-
-# 数据处理
 pandas>=1.5.0
 matplotlib>=3.5.0
-
-# 开发工具
 pytest>=7.0.0
 black>=22.0.0
 flake8>=5.0.0
