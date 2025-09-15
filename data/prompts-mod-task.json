@@ -1,0 +1,74 @@
+[
+    {
+      "index": 0,
+      "clean_prompt": "Find (17 + 62) mod 59. Please solve this step by step.",
+      "corrupted_prompt": "Find (17 <unk> 62) <unk> 59. Please solve this step by step."
+    },
+    {
+      "index": 1,
+      "clean_prompt": "What is (11 + 26) modulo 23? Think step by step.",
+      "corrupted_prompt": "What is (11 <unk> 26) <unk> 23? Think step by step."
+    },
+    {
+      "index": 2,
+      "clean_prompt": "What is (13 + 82) modulo 59? Think step by step.",
+      "corrupted_prompt": "What is (13 <unk> 82) <unk> 59? Think step by step."
+    },
+    {
+      "index": 3,
+      "clean_prompt": "Find (35 + 6) mod 23. Please solve this step by step.",
+      "corrupted_prompt": "Find (35 <unk> 6) <unk> 23. Please solve this step by step."
+    },
+    {
+      "index": 4,
+      "clean_prompt": "What is (32 + 7) modulo 29? Think step by step.",
+      "corrupted_prompt": "What is (32 <unk> 7) <unk> 29? Think step by step."
+    },
+    {
+      "index": 5,
+      "clean_prompt": "What is the result of (69 + 21) modulo 59? Explain your calculation.",
+      "corrupted_prompt": "What is the result of (69 <unk> 21) <unk> 59? Explain your calculation."
+    },
+    {
+      "index": 6,
+      "clean_prompt": "What is (24 + 9) modulo 23? Think step by step.",
+      "corrupted_prompt": "What is (24 <unk> 9) <unk> 23? Think step by step."
+    },
+    {
+      "index": 7,
+      "clean_prompt": "Find (26 + 51) mod 47. Please solve this step by step.",
+      "corrupted_prompt": "Find (26 <unk> 51) <unk> 47. Please solve this step by step."
+    },
+    {
+      "index": 8,
+      "clean_prompt": "Find (20 + 57) mod 41. Please solve this step by step.",
+      "corrupted_prompt": "Find (20 <unk> 57) <unk> 41. Please solve this step by step."
+    },
+    {
+      "index": 9,
+      "clean_prompt": "Find (6 + 45) mod 37. Please solve this step by step.",
+      "corrupted_prompt": "Find (6 <unk> 45) <unk> 37. Please solve this step by step."
+    },
+    {
+      "index": 10,
+      "clean_prompt": "What is (3 + 36) modulo 29? Think step by step.",
+      "corrupted_prompt": "What is (3 <unk> 36) <unk> 29? Think step by step."
+    },
+    {
+      "index": 11,
+      "clean_prompt": "What is (62 + 2) modulo 53? Think step by step.",
+      "corrupted_prompt": "What is (62 <unk> 2) <unk> 53? Think step by step."
+    },
+    {
+      "index": 12,
+      "clean_prompt": "What is (7 + 24) modulo 23? Think step by step.",
+      "corrupted_prompt": "What is (7 <unk> 24) <unk> 23? Think step by step."
+    },
+    {
+      "index": 13,
+      "clean_prompt": "What is (5 + 26) modulo 23? Think step by step.",
+      "corrupted_prompt": "What is (5 <unk> 26) <unk> 23? Think step by step."
+    }
+  ]
+
+
